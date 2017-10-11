@@ -54,6 +54,10 @@ class TestWeatherMonitor(unittest.TestCase):
                                  "Row count mismatch. Expected %d, got %d" % (count, metric['last_rowid']))
                 break
 
+    def tearDown(self):
+        super(TestWeatherMonitor, self).tearDown()
+        self._delete_test_metric()
+
     def _delete_test_metric(self):
         try:
             requests.delete(GROK_ENDPOINT + TEST_METRIC, auth=(GROK_KEY, ''), verify=False)
