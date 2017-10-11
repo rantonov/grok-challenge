@@ -2,16 +2,13 @@ import threading
 import time
 import logging
 import requests
+from config import APIXU_KEY, GROK_KEY
 
-# these should be macros expanded on deployment
-COM_ERROR_CODE = 1000  # communication error
-GROK_KEY = 'bNz3SyKXTQj4fmTaMHKvKqYah4UAwkDW'
 GROK_ENDPOINT = 'https://lyra-cuw3.grokstream.com/_metrics/custom/'
+APIXU_ENDPOINT = 'https://api.apixu.com/v1/current.json'
 
 
 class WeatherMonitor:
-    APIXU_KEY = '2047da482cc644e482a212126170910'
-    APIXU_ENDPOINT = 'https://api.apixu.com/v1/current.json'
 
     # defaults to be overwritten by params if necessary
     LOCATION_Q = 'Irvine, CA'
@@ -63,8 +60,8 @@ class WeatherMonitor:
         :return: a number of weather related metrics in a dictionary
 
         """
-        params = {'key': WeatherMonitor.APIXU_KEY, 'q': self.location}
-        r = requests.get(WeatherMonitor.APIXU_ENDPOINT, params=params)
+        params = {'key': APIXU_KEY, 'q': self.location}
+        r = requests.get(APIXU_ENDPOINT, params=params)
         if r.status_code > 299:
             logging.error('Weather Service responded with code %d.' % r.status_code)
             return {}
