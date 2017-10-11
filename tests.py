@@ -23,10 +23,9 @@ class TestWeatherMonitor(unittest.TestCase):
     def test_single_post(self):
         self._delete_test_metric()
         metrics = requests.get(GROK_ENDPOINT, auth=(GROK_KEY, ''), verify=False).json()
-        time.sleep(1)
         # test that te metric was deleted
         for metric in metrics:
-            self.assertFalse(metric["name"] != TEST_METRIC)
+            self.assertFalse(metric["name"] == TEST_METRIC)
 
         self.mon.post_single_metric(TEST_METRIC, int(time.time()), random.random())
 
