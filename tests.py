@@ -23,6 +23,7 @@ class TestWeatherMonitor(unittest.TestCase):
     def test_single_post(self):
         self._delete_test_metric()
         metrics = requests.get(GROK_ENDPOINT, auth=(GROK_KEY, ''), verify=False).json()
+        time.sleep(1)
         # test that te metric was deleted
         for metric in metrics:
             self.assertFalse(metric["name"] != TEST_METRIC)
@@ -32,7 +33,7 @@ class TestWeatherMonitor(unittest.TestCase):
         # get the custom metrics again after a slight delay
         time.sleep(1)
         metrics = requests.get(GROK_ENDPOINT, auth=(GROK_KEY, ''), verify=False).json()
-
+                                
         # make sure that the metric was created
         found = False
         for metric in metrics:
