@@ -32,14 +32,12 @@ class WeatherMonitor:
         tstamp = time.time()
         try:
             data = self.get_weather()
-            # if successful - the dict is not empty
-            if len(data):
-                # post each of the metrics to Grok and log any errors
-                for key, value in data.iteritems():
-                    try:
-                        self.post_single_metric(key, tstamp, value)
-                    except requests.ConnectionError as ex:
-                        logging.error('Connectivity issue encountered when posting %s to Grok: %s.' % (key, ex.message))
+            # post each of the metrics to Grok and log any errors
+            for key, value in data.iteritems():
+                try:
+                    self.post_single_metric(key, tstamp, value)
+                except requests.ConnectionError as ex:
+                    logging.error('Connectivity issue encountered when posting %s to Grok: %s.' % (key, ex.message))
         except requests.ConnectionError as ex:
             logging.error('Network issue encountered when accessing the weather service: %s.' % ex.message)
 
