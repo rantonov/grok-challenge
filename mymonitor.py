@@ -45,7 +45,7 @@ class WeatherMonitor:
 
         # After all is posted: schedule the next call
         self.next_call = self.next_call + self.interval
-        threading.Timer(self.next_call - tstamp, self.post_metric).start()
+        threading.Timer(self.next_call - time.time(), self.post_metric).start()
 
     def post_single_metric(self, metric_name, timestamp, value):
         payload = {'timestamp': int(timestamp), 'value': value}
